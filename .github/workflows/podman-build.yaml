@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ github.event.repository.name }}
-      IMAGE_TAGS: latest, ${{ github.sha }}
+      IMAGE_TAGS: latest
       IMAGE_REGISTRY: ghcr.io
       IMAGE_REPOSITORY: ${{ github.event.repository.name }}
 
@@ -32,7 +32,7 @@ jobs:
         with:
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_TAGS }}
-          platforms: amd64, arm64
+          platforms: "amd64, arm64"
           build-args: |
             FEDORA_VERSION=${{ env.FEDORA_VERSION }}
             BUILD_DATE=${{ github.event.head_commit.timestamp }}
@@ -43,4 +43,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print image url
-        run: echo "Image pushed to ${{ steps.build-push-image.outputs.registry-paths }}"
+"·"        run: echo "Image pushed to ${{ steps.build-push-image.outputs.registry-paths }}"
