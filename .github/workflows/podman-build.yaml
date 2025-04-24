@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ github.event.repository.name }}
-      IMAGE_TAGS: latest, ${{ github.sha::7 }}
+      IMAGE_TAGS: latest, ${{ github.sha }}
       IMAGE_REGISTRY: ghcr.io
       IMAGE_REPOSITORY: ${{ github.event.repository.name }}
 
@@ -36,7 +36,7 @@ jobs:
           build-args: |
             FEDORA_VERSION=${{ env.FEDORA_VERSION }}
             BUILD_DATE=${{ github.event.head_commit.timestamp }}
-            VCS_REF=${{ github.sha::7 }}
+            VCS_REF=${{ github.sha }}
           dockerfiles: ./Containerfile
           registry: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}
           username: ${{ github.actor }}
