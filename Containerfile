@@ -23,7 +23,7 @@ RUN dnf -y update && \
         chezmoi \
         starship \
         gh \
-        direnv && \
+        direnv \
         krb5-workstation && \
     dnf clean all 
 

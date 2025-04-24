@@ -1,0 +1,55 @@
+---
+name: Build and Push Container with Podman
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: {{ github.event.repository.name }}
+  FEDORA_VERSION=42
+  BUILD_DATE: ${{ github.event.head_commit.timestamp }}
+  VERSION: ${{ github.event.release.tag_name }}
+  # Define the tags for the image
+  TAG_LATEST: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+  TAG_SHA: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${GITHUB_SHA::7}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU for multi-arch
+        uses: docker/setup-qemu-action@v3
+
+      - name: Install Podman
+        run: |
+          sudo apt update
+          sudo apt -y install podman
+
+      - name: Log in to GHCR
+        env:
+          CR_PAT: ${{ secrets.CR_PAT }}
+        run: |
+          echo "$CR_PAT" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
+
+
+      - name: Build multi-arch image with Podman
+        env:
+          IMAGE: ghcr.io/${{ github.repository_owner }}/toolbox-dev:latest
+        run: |
+          podman buildx create --use
+          podman buildx build --platform linux/amd64,linux/arm64 \
+            --build-arg "$FEDORA_VERSION" \
+            --build-arg BUILD_DATE="$BUILD_DATE" \
+            --build-arg VERSION="$VERSION" \
+            --tag "$TAG_LATEST" \
+            --tag "$TAG_SHA" \
+            --file Containerfile . \
+            --push
