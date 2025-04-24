@@ -7,9 +7,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-
-  # Define the tags for the image
  
 jobs:
   build-and-push:
@@ -46,7 +43,7 @@ jobs:
           podman buildx build --platform linux/amd64,linux/arm64 \
             --build-arg "$FEDORA_VERSION" \
             --build-arg BUILD_DATE="$BUILD_DATE" \
-            --build-arg VCS_REF="${GITHUB_SHA::7}" \
+            --build-arg VCS_REF="${GITHUB_SHA::7}·" \
             --tag "$TAG_LATEST" \
             --tag "$TAG_SHA" \
             --file Containerfile . \
