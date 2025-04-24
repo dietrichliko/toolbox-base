@@ -43,4 +43,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print image url
-"·"        run: echo "Image pushed to ${{ steps.build-push-image.outputs.registry-paths }}"
+          run: echo "Image pushed to ${{ steps.build-push-image.outputs.registry-paths }}"
