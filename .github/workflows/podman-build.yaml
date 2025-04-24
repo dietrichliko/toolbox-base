@@ -5,15 +5,12 @@ on:
   push:
     branches:
       - main
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 env:
   IMAGE_NAME: ${{ github.event.repository.name }}
   FEDORA_VERSION="42"
   BUILD_DATE: ${{ github.event.head_commit.timestamp }}
-  VERSION: ${{ github.event.release.tag_name }}
   # Define the tags for the image
   TAG_LATEST: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
   TAG_SHA: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${GITHUB_SHA::7}
@@ -48,7 +45,7 @@ jobs:
           podman buildx build --platform linux/amd64,linux/arm64 \
             --build-arg "$FEDORA_VERSION" \
             --build-arg BUILD_DATE="$BUILD_DATE" \
-            --build-arg VERSION="$VERSION" \
+            --build-arg VCS_REF="$GITHUB_SHA" \
             --tag "$TAG_LATEST" \
             --tag "$TAG_SHA" \
             --file Containerfile . \

@@ -6,7 +6,6 @@ FROM registry.fedoraproject.org/fedora-toolbox:${FEDORA_VERSION}
 LABEL org.opencontainers.image.title="My base Fedora Toolbox"
 LABEL org.opencontainers.image.description="A Fedora-based development container for toolbox"
 LABEL org.opencontainers.image.revision=$VCS_REF
-LABEL org.opencontainers.image.version=$VERSION
 LABEL org.opencontainers.image.created=$BUILD_DATE
 LABEL org.opencontainers.image.authors="Dietrich Liko <Dietrich.Liko@oeaw.ac.at>"
 LABEL org.opencontainers.image.licenses="MIT"                   
