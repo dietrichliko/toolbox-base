@@ -26,8 +26,8 @@ jobs:
       - name: Set up QEMU for multi-arch
         uses: docker/setup-qemu-action@v3
 
-      - name: Build image 
-        id: build-image
+      - name: Build and push image 
+        id: build-push-image
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
@@ -43,4 +43,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print image url
-        run: echo "Image pushed to ${{ steps.push-to-quay.outputs.registry-paths }}"
+        run: echo "Image pushed to ${{ steps.build-push-image.outputs.registry-paths }}"
