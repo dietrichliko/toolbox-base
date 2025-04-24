@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ github.event.repository.name }}
+      IMAGE_NAMESPACE: ${{ github.repository_owner }}·
       IMAGE_TAGS: latest
       IMAGE_REGISTRY: ghcr.io
       IMAGE_REPOSITORY: ${{ github.event.repository.name }}
@@ -43,4 +44,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print image url
-          run: echo "Image pushed to ${{ steps.build-push-image.outputs.registry-paths }}"
+        run: echo "Image pushed to ${{ steps.build-push-image.outputs.registry-paths }}"
