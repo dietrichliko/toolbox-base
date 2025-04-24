@@ -28,10 +28,8 @@ jobs:
           sudo apt -y install podman
 
       - name: Log in to GHCR
-        env:
-          CR_PAT: ${{ secrets.CR_PAT }}
         run: |
-          echo "$CR_PAT" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
 
 
       - name: Build multi-arch image with Podman
