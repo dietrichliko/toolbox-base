@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: {{ github.event.repository.name }}
+  IMAGE_NAME: ${{ github.event.repository.name }}
   FEDORA_VERSION="42"
   BUILD_DATE: ${{ github.event.head_commit.timestamp }}
   VERSION: ${{ github.event.release.tag_name }}
