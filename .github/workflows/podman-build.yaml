@@ -37,8 +37,7 @@ jobs:
           TAG_LATEST: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
           TAG_SHA: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${GITHUB_SHA::7}
         run: |
-          podman buildx create --use
-          podman buildx build --platform linux/amd64,linux/arm64 \
+          podman buildx --platform linux/amd64,linux/arm64 \
             --build-arg "$FEDORA_VERSION" \
             --build-arg BUILD_DATE="$BUILD_DATE" \
             --build-arg VCS_REF="${GITHUB_SHA::7}·" \
